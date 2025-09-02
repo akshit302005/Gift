@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Akshit ➝ Srushti</title>
+  <meta name="description" content="A romantic proposal page from Akshit to Srushti — enhanced with petals, fireworks, and touch interactions."/>
+  <style>
+    :root{
+      --rose-1:#ffedf1;
+      --rose-2:#ffd7e6;
+      --accent:#ff6f91;
+      --accent-2:#ff3b6b;
+      --gold:#e2c264;
+      --muted:#6b6b6b;
+      --card:#fff;
+      --maxWidth:1100px;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#fff7fb 0%, #fff0f6 55%, #fff7fb 100%);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    /* Container */
+    .container{width:min(var(--maxWidth),94vw); margin:0 auto; padding:0 12px}
+
+    /* NAV */
+    nav{
+      position:fixed; inset-inline:0; top:0; z-index:60;
+      display:flex; justify-content:center; background:rgba(255,255,255,0.55);
+      backdrop-filter: blur(6px) saturate(130%);
+      border-bottom:1px solid rgba(255,111,145,0.08);
+      padding:10px 0;
+    }
+    .nav-inner{width:min(var(--maxWidth),94vw); display:flex; justify-content:space-between; align-items:center; gap:12px}
+    .brand{display:flex; gap:10px; align-items:center; font-weight:600}
+    .brand svg{width:26px; height:26px; color:var(--accent-2)}
+    .nav-links{display:flex; gap:10px; align-items:center}
+    .chip{background:#fff; padding:8px 10px; border-radius:999px; font-size:13px; border:1px solid rgba(255,111,145,0.08); cursor:pointer}
+
+    /* Hero */
+    header.hero{
+      min-height:100svh; display:grid; place-items:center; text-align:center; padding:28px 0 80px; position:relative; overflow:hidden;
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(255,223,235,0.6), transparent 12%),
+        radial-gradient(700px 350px at 90% 90%, rgba(255,240,245,0.6), transparent 12%);
+    }
+    .hero-card{position:relative; z-index:3; max-width:920px; width:100%; margin-top:44px}
+    .kicker{color:var(--accent-2); font-weight:700; font-size:13px; letter-spacing:.18em; text-transform:uppercase}
+    h1{
+      font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(32px,6.6vw,64px); margin:12px 0 10px;
+      line-height:1.03;
+      text-shadow: 0 6px 18px rgba(255,111,145,0.06);
+    }
+    .lead{color:var(--muted); font-size:clamp(15px,2.4vw,18px); max-width:42ch; margin:0 auto 18px}
+
+    .rings{display:inline-flex; gap:12px; margin-top:8px; align-items:center}
+    .ring{width:44px; height:44px; border-radius:50%; border:3px solid var(--gold); position:relative; background:linear-gradient(180deg,#fff,#fff8f5)}
+
+    /* Sections */
+    section{padding:84px 0}
+    h2.section-title{font-family:'Playfair Display',serif; font-size:26px; margin:0 0 6px}
+    p.lead-muted{color:var(--muted); margin:0 0 16px}
+
+    .card{background:var(--card); border-radius:var(--radius); box-shadow:0 10px 30px rgba(0,0,0,0.06); padding:22px}
+
+    .grid{display:grid; gap:18px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:900px){ .grid-2,.grid-3{grid-template-columns:1fr} }
+
+    /* Timeline */
+    .timeline{position:relative; padding-left:28px}
+    .timeline::before{content:''; position:absolute; left:14px; top:0; bottom:0; width:3px; background:linear-gradient(var(--accent),transparent 60%)}
+    .moment{position:relative; margin:14px 0; padding:14px 16px; border-radius:14px; background:linear-gradient(180deg,#fff,#fff7fb); border:1px solid rgba(255,111,145,0.06)}
+    .moment::before{content:''; position:absolute; left:-6px; top:18px; width:12px; height:12px; background:var(--accent-2); border-radius:50%; box-shadow:0 0 0 6px rgba(255,230,240,0.6)}
+    .moment h4{margin:0 0 6px; font-size:18px}
+    .moment p{margin:0; color:var(--muted)}
+
+    /* Gallery */
+    .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .gallery img{width:100%; height:220px; object-fit:cover; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,0.06); transition:transform .45s cubic-bezier(.2,.9,.2,1)}
+    .gallery img:active, .gallery img:hover{transform:scale(1.03)}
+    @media (max-width:900px){ .gallery{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:600px){ .gallery{grid-template-columns:1fr} .gallery img{height:260px} }
+
+    /* Love letter */
+    .letter{padding:22px; border:1px dashed rgba(255,182,203,0.45); background:linear-gradient(180deg,#fff,#fff7fb)}
+
+    /* Proposal */
+    .proposal{position:relative; display:grid; place-items:center; text-align:center}
+    .proposal h2{font-family:'Playfair Display',serif; font-size:clamp(26px,4.4vw,44px); margin:6px 0}
+    .proposal p{color:var(--muted); margin:0}
+    .cta{display:flex; gap:14px; justify-content:center; align-items:center; margin-top:18px; min-height:70px; position:relative}
+    .btn{border:none; border-radius:999px; padding:12px 18px; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+    .btn.yes{background:linear-gradient(180deg,var(--accent-2),var(--accent)); color:#fff; min-width:120px}
+    .btn.no{background:#fff; color:#333; border:1px solid rgba(0,0,0,0.06); min-width:120px; position:relative}
+    .btn.no.shrink{transform:scale(.85); opacity:.9}
+
+    /* Heartbeat behind the question */
+    .heartbeat-wrap{position:relative; display:inline-block; padding:12px 20px; border-radius:14px;}
+    .heartbeat-glow{
+      position:absolute; inset:0; border-radius:14px; z-index:-1;
+      box-shadow:0 0 0 0 rgba(255,111,145,0.0);
+      animation: beat 1.25s infinite ease-in-out;
+      pointer-events:none;
+    }
+    @keyframes beat{
+      0%{box-shadow:0 0 0 0 rgba(255,111,145,0.06)}
+      40%{box-shadow:0 0 40px 10px rgba(255,111,145,0.08)}
+      100%{box-shadow:0 0 0 0 rgba(255,111,145,0.0)}
+    }
+
+    /* Footer */
+    footer{padding:40px 0 120px; text-align:center; color:var(--muted)}
+
+    /* Floating petals (will be generated with JS into .petal) */
+    .petal{position:fixed; width:26px; height:26px; pointer-events:none; z-index:20; transform-origin:center; will-change: transform, opacity;}
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(14px) scale(.99); transition:all .7s cubic-bezier(.2,.9,.2,1)}
+    .reveal.visible{opacity:1; transform:none}
+
+    /* Canvas for fireworks */
+    #fxCanvas{position:fixed; inset:0; z-index:50; pointer-events:none}
+
+    /* Responsive tweaks */
+    @media (max-width:600px){
+      .kicker{font-size:11px}
+      h1{font-size:calc(22px + 8vw)}
+      .lead{font-size:15px}
+      .rings{gap:8px}
+      .ring{width:32px; height:32px}
+      .cta{min-height:86px}
+      .btn{padding:14px 16px; font-size:15px; min-width:100px}
+    }
+  </style>
+</head>
+<body>
+  <!-- canvases & containers -->
+  <canvas id="fxCanvas"></canvas>
+  <div id="petal-holder"></div>
+
+  <!-- NAV -->
+  <nav aria-label="Main">
+    <div class="nav-inner container">
+      <div class="brand"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-6.716-4.308-9.428-7.02A5.5 5.5 0 1 1 11.5 5.2 5.5 5.5 0 1 1 21.428 13.98C18.716 16.692 12 21 12 21z"/></svg>Akshit ❤ Srushti</div>
+      <div class="nav-links">
+        <button class="chip" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">Our Story</button>
+        <button class="chip" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Gallery</button>
+        <button class="chip" onclick="document.getElementById('proposal').scrollIntoView({behavior:'smooth'})">The Proposal</button>
+        <button class="chip" id="musicToggle">♪ Music: Off</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <div class="hero-card container reveal">
+      <div class="kicker"> From My Bestie to My Better Half - The Most Sweetest person </div>
+      <h1>Hey My cutu,<br>let's turn our little but sweet fights and laughs into <em style="color:var(--accent-2)">always</em> 💍</h1>
+      <p class="lead">We started with silly fights, grew into best friends, and somewhere along the way my heart chose you. Today, I choose you again — for every tomorrow.</p>
+      <div class="rings" aria-hidden="true">
+        <span class="ring" style="transform:translateX(8px)"></span>
+        <span class="ring" style="margin-left:-20px"></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- STORY -->
+    <section id="story" class="container reveal">
+      <div class="grid grid-2">
+        <div class="card">
+          <h2 class="section-title">Our Story</h2>
+          <p class="lead-muted">A tiny timeline of us ♥</p>
+          <div class="timeline">
+            <div class="moment"><h4>We used to fight and Bully</h4><p>Playful arguments, silly disagreements — we never imagined where this would go.</p></div>
+            <div class="moment"><h4>Then we got close</h4><p>The noise turned into comfort. You started to feel like home.</p></div>
+            <div class="moment"><h4>Besties</h4><p>Laughs, late-night chats, and that feeling of being truly seen.I really liked when u talked to me </p></div>
+            <div class="moment"><h4>Now, a couple</h4><p>It’s been a couple of months, but my heart knows what it wants — you, Srushti.</p></div>
+          </div>
+        </div>
+        <div class="card" style="display:grid; place-items:center; text-align:center; background:linear-gradient(135deg,#fff,#fff5f9)">
+          <p class="kicker">Akshit → Srushti</p>
+          <h3 style="font-family:'Playfair Display',serif; font-size:28px; margin:8px 0 12px">You're my favorite <em>accident</em> that became destiny.</h3>
+          <p style="color:var(--muted); max-width:40ch">Here’s to choosing each other — on the good days, the hard days, and all the ordinary days in between.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="container reveal">
+      <h2 class="section-title">My Sweetest moments</h2>
+      <div class="gallery">
+        <img src="pic1.jpg.jpg" alt="Us laughing">
+        <img src="oic2.jpg.jpg" alt="A sweet moment">
+        <img src="pic3.jpg.jpg" alt="Holding hands">
+        <img src="pic4.jpg.jpg" alt="Sunset walk">
+        <img src="pic5.jpg.jpg" alt="Coffee date">
+        <img src="pic6.jpg.jpg" alt="Candid smile">
+      </div>
+    </section>
+
+    <!-- LOVE LETTER -->
+    <section id="letter" class="container reveal">
+      <div class="card letter">
+        <h2 class="section-title">My Feelings For you, My Love</h2>
+        <p>I still remember how we started… two people who used to fight over the smallest things. Funny how life works, right? Those little arguments slowly turned into laughter, that laughter into friendship, and before I even realized it, you became my safe place — my best friend, my favorite person.
+
+In just these few months, you’ve made my world so much brighter. With you, even the ordinary feels special. I love how we can be silly one moment and serious the next, how we can fight and still end up smiling, and how just being around you feels like home.
+
+Srushti, you mean more to me than I can put into words. You’ve changed my life in the best way, and I can’t imagine a future without you in it.
+
+So today, with all my heart, I want to ask you the most important question of my life…</p>
+        <p style="margin-top:10px">— <strong>Akshit</strong></p>
+      </div>
+    </section>
+
+    <!-- PROPOSAL -->
+    <section id="proposal" class="proposal reveal container">
+      <div style="max-width:760px; width:100%">
+        <div style="display:flex; justify-content:center">
+          <div class="heartbeat-wrap">
+            <div class="heartbeat-glow" aria-hidden="true"></div>
+            <h2 class="section-title">Srushti, will you Be Mine Forever?</h2>
+          </div>
+        </div>
+        <p style="color:var(--muted); margin-top:6px">Let’s write the rest of our story together. 💗</p>
+
+        <div class="cta" style="margin-top:22px">
+          <button class="btn yes" id="yesBtn" aria-label="Yes, I will">Yes!</button>
+          <button class="btn no" id="noBtn" aria-label="No">No</button>
+        </div>
+
+        <p style="margin-top:12px; font-size:13px; color:#888">Psst… try tapping “No” 😉</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="text-align:center; padding:26px 0 120px; color:var(--muted)">Made with ❤ for A pretty Girl I knew </div>
+  </footer>
+
+  <!-- Audio (put song.mp3 in same folder) -->
+  <audio id="bgm" loop preload="auto"><source src="song1.mp3" type="audio/mpeg"></audio>
+
+  <script>
+  /***************
+   * Utilities
+   ***************/
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+
+  /* Intersection Observer for reveal */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, {threshold: 0.15});
+  $$('.reveal').forEach(el => io.observe(el));
+
+  /***************
+   * Petals (falling)
+   ***************/
+  const petalHolder = document.getElementById('petal-holder');
+  const maxPetals = 14;
+  let petalInterval;
+
+  function createPetal() {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    // SVG petal content
+    p.innerHTML = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c1.2 3.5 6 6 9 8s-1 7-4 10-7 1-9-2S6 8 12 2z" fill="#ff7aa8"/></svg>`;
+    // random start
+    const left = Math.random() * 100;
+    p.style.left = left + 'vw';
+    p.style.top = (Math.random() * -10 - 6) + 'vh';
+    p.style.transform = `rotate(${Math.random()*360}deg)`;
+    p.style.opacity = (0.7 + Math.random()*0.3).toString();
+    petalHolder.appendChild(p);
+
+    // animate via JS so we can vary speed
+    const speed = 1.2 + Math.random()*1.8;
+    let start = performance.now();
+    function tick(now) {
+      const t = (now - start) / 1000 * speed;
+      p.style.top = (parseFloat(p.style.top) + t*10) + 'vh';
+      p.style.left = (parseFloat(p.style.left) + Math.sin(now/800 + left) * 0.12) + 'vw';
+      p.style.transform = `rotate(${now/30 % 360}deg)`;
+      // remove after below the viewport
+      if (parseFloat(p.style.top) > 110) { p.remove(); return; }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function startPetals(){
+    // initial burst
+    for (let i=0;i<8;i++) setTimeout(createPetal, i*140);
+    // keep generating
+    petalInterval = setInterval(() => {
+      if (document.documentElement.clientWidth < 420 && Math.random() < 0.6) createPetal(); // fewer on narrow screens
+      else createPetal();
+      // clean up to max
+      if (petalHolder.children.length > maxPetals) petalHolder.removeChild(petalHolder.firstChild);
+    }, 900);
+  }
+  startPetals();
+
+  /***************
+   * Fireworks (canvas)
+   ***************/
+  const fxCanvas = document.getElementById('fxCanvas');
+  const fxCtx = fxCanvas.getContext('2d');
+  function resizeFX(){ fxCanvas.width = innerWidth; fxCanvas.height = innerHeight; }
+  addEventListener('resize', resizeFX); resizeFX();
+
+  const particles = [];
+  function spawnFirework(x, y, color){
+    // burst particles
+    const count = 50 + Math.floor(Math.random()*40);
+    for (let i=0;i<count;i++){
+      const angle = Math.random()*Math.PI*2;
+      const speed = 2 + Math.random()*6;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 80 + Math.random()*40,
+        alpha: 1,
+        color: color || `hsl(${Math.floor(Math.random()*360)},80%,60%)`,
+        size: 2 + Math.random()*3
+      });
+    }
+  }
+
+  function spawnHearts(x,y){
+    for (let i=0;i<24;i++){
+      const angle = -Math.PI/2 + (Math.random()-0.5)*1.6; // upward drifting
+      const speed = 1 + Math.random()*4;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle)*speed + (Math.random()-0.5)*2,
+        vy: Math.sin(angle)*speed + (Math.random()-0.2)*-2,
+        life: 60 + Math.random()*40,
+        alpha: 1,
+        color: 'rgba(255,100,140,1)',
+        size: 6,
+        heart: true,
+        rot: Math.random()*360
+      });
+    }
+  }
+
+  function drawFX(){
+    fxCtx.clearRect(0,0,fxCanvas.width,fxCanvas.height);
+    for (let i = particles.length-1; i>=0; i--){
+      const p = particles[i];
+      fxCtx.save();
+      fxCtx.globalAlpha = Math.max(0, p.alpha * (p.life/120));
+      if (p.heart){
+        fxCtx.translate(p.x, p.y);
+        fxCtx.rotate(p.rot * Math.PI/180);
+        fxCtx.fillStyle = p.color;
+        // simple heart shape
+        fxCtx.beginPath();
+        fxCtx.moveTo(0, -p.size/2);
+        fxCtx.bezierCurveTo(-p.size, -p.size*1.1, -p.size*1.1, p.size/2, 0, p.size);
+        fxCtx.bezierCurveTo(p.size*1.1, p.size/2, p.size, -p.size*1.1, 0, -p.size/2);
+        fxCtx.fill();
+      } else {
+        fxCtx.fillStyle = p.color;
+        fxCtx.fillRect(p.x, p.y, p.size, p.size);
+      }
+      fxCtx.restore();
+      // physics
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.06; // gravity
+      p.vx *= 0.99;
+      p.life--;
+      p.alpha -= 0.012;
+      if (p.life <= 0 || p.alpha <= 0) particles.splice(i,1);
+    }
+    requestAnimationFrame(drawFX);
+  }
+  drawFX();
+
+  /***************
+   * YES button -> fireworks + hearts + message
+   ***************/
+  const yesBtn = $('#yesBtn');
+  yesBtn.addEventListener('click', onYes);
+  yesBtn.addEventListener('touchstart', (e) => { e.preventDefault(); onYes(); });
+
+  function onYes(){
+    // center top of viewport as origin
+    const x = innerWidth/2 + (Math.random()-0.5)*200;
+    const y = innerHeight/2 + (Math.random()-0.5)*120;
+    spawnFirework(x,y,'#ffd166');
+    spawnFirework(x+80, y-30, '#ff6f91');
+    spawnFirework(x-80, y+10, '#84c5f4');
+    spawnHearts(innerWidth/2, innerHeight/2);
+    // burst of petals
+    for (let i=0;i<20;i++) createPetal();
+    // update UI
+    const h2 = document.querySelector('#proposal h2') || document.querySelector('.proposal .section-title');
+    if (h2) h2.textContent = 'Yay! You said YES! 💖';
+    // show a gentle full-screen overlay text (temporary)
+    showOverlayMessage("Forever starts now. I love you, Srushti ❤");
+  }
+
+  function showOverlayMessage(text){
+    const o = document.createElement('div');
+    o.style.position='fixed';
+    o.style.inset='0';
+    o.style.display='grid';
+    o.style.placeItems='center';
+    o.style.zIndex='120';
+    o.style.background='linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06))';
+    o.innerHTML = `<div style="background:rgba(255,255,255,0.96); padding:24px 28px; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,0.16); font-size:20px; text-align:center; max-width:90vw">${text}</div>`;
+    document.body.appendChild(o);
+    setTimeout(()=>{ o.style.transition='opacity .6s'; o.style.opacity=0; setTimeout(()=>o.remove(),620); }, 2600);
+  }
+
+  /***************
+   * NO button -> runaway + shrink on each try (touch-friendly)
+   ***************/
+  const noBtn = $('#noBtn');
+  let noAttempts = 0;
+  function moveNo(e){
+    noAttempts++;
+    // shrink gradually
+    noBtn.classList.add('shrink');
+    setTimeout(()=>noBtn.classList.remove('shrink'), 300);
+
+    // compute a random position within the CTA area
+    const ctaRect = document.querySelector('.cta').getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    const padding = 8;
+    const maxX = Math.max(0, ctaRect.width - btnRect.width - padding);
+    const maxY = Math.max(0, ctaRect.height - btnRect.height - padding);
+    const x = ctaRect.left + padding + Math.random() * maxX;
+    const y = ctaRect.top + padding + Math.random() * maxY;
+
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = (x - ctaRect.left) + 'px';
+    noBtn.style.top = (y - ctaRect.top) + 'px';
+
+    // also scatter a few petals and mini hearts
+    for (let i=0;i<6;i++) createPetal();
+    spawnHearts(x + btnRect.width/2, y + btnRect.height/2);
+
+    // if too many attempts, playful message
+    if (noAttempts > 6) showOverlayMessage("Nice try 😉 but you already know the answer.");
+  }
+
+  noBtn.addEventListener('mouseenter', moveNo);
+  noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(e); });
+
+  /***************
+   * Music toggle (user must click to enable audio on mobile)
+   ***************/
+  const bgm = document.getElementById('bgm');
+  const musicToggle = document.getElementById('musicToggle');
+  let musicOn = false;
+  function updateMusicLabel(){ musicToggle.textContent = `♪ Music: ${musicOn ? 'On' : 'Off'}`; }
+  musicToggle.addEventListener('click', async () => {
+    try {
+      if (!musicOn) { await bgm.play(); musicOn = true; }
+      else { bgm.pause(); musicOn = false; }
+      updateMusicLabel();
+    } catch (err) {
+      alert('To enable music: add a file named "song.mp3" in the same folder and then tap the Music button again.');
+    }
+  });
+  updateMusicLabel();
+
+  /***************
+   * Scroll-based parallax tweak (optional small motion)
+   ***************/
+  let lastScroll = 0;
+  addEventListener('scroll', () => {
+    const st = pageYOffset || document.documentElement.scrollTop;
+    const hero = document.querySelector('header.hero');
+    if (hero) hero.style.transform = `translateY(${st * 0.02}px)`;
+    lastScroll = st;
+  }, {passive:true});
+
+  /***************
+   * Small loader: gradually spawn subtle sparkles around hero
+   ***************/
+  (function sparklesInit(){
+    const heroRect = document.querySelector('header.hero').getBoundingClientRect();
+    // tiny decorative sparkles (pure CSS circles) appended to hero for initial effect
+    for (let i=0;i<10;i++){
+      const s = document.createElement('div');
+      s.style.position='absolute';
+      s.style.width = (4 + Math.random()*6)+'px';
+      s.style.height = s.style.width;
+      s.style.borderRadius='50%';
+      s.style.background = 'rgba(255,255,255,0.8)';
+      s.style.left = (10 + Math.random()*80)+'%';
+      s.style.top = (10 + Math.random()*60)+'%';
+      s.style.filter = 'blur(2px)';
+      s.style.opacity = 0.9*Math.random();
+      s.style.zIndex = 2;
+      s.style.pointerEvents='none';
+      document.querySelector('header.hero').appendChild(s);
+      // gentle float
+      const dur = 3000 + Math.random()*5000;
+      let start = performance.now();
+      (function float(now){
+        const t = (now - start)/dur;
+        s.style.transform = `translateY(${Math.sin(t*2*Math.PI)*6}px)`;
+        requestAnimationFrame(float);
+      })(start);
+    }
+  })();
+
+  /***************
+   * Petal helper (reuse createPetal used earlier in petal generator)
+   ***************/
+  function createPetal() {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    // simple heart/leaf svg — prettier than plain shape
+    p.innerHTML = `<svg viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c1.2 3.5 6 6 9 8s-1 7-4 10-7 1-9-2S6 8 12 2z" fill="#ff7aa8"/></svg>`;
+    // start position
+    const left = Math.random()*100;
+    p.style.left = left + 'vw';
+    p.style.top = (-8 - Math.random()*6) + 'vh';
+    p.style.opacity = (0.8 + Math.random()*0.2).toString();
+    p.style.transform = `rotate(${Math.random()*360}deg)`;
+    petalHolder.appendChild(p);
+
+    // animate via CSS-ish JS for control
+    const start = performance.now();
+    const speed = 0.8 + Math.random()*1.6;
+    function frame(now){
+      const elapsed = (now - start) / 1000;
+      const dy = elapsed * 14 * speed; // vh
+      const dx = Math.sin(elapsed * (0.3 + Math.random()*0.8)) * 6;
+      p.style.top = (parseFloat(p.style.top) + dy) + 'vh';
+      p.style.left = (left + dx) + 'vw';
+      p.style.transform = `rotate(${(elapsed*120) % 360}deg)`;
+      // remove when below viewport
+      if (parseFloat(p.style.top) > 110) { p.remove(); return; }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // keep a slow stream of petals in background
+  setInterval(() => {
+    if (petalHolder.children.length < 18) createPetal();
+  }, 1200);
+
+  /***************
+   * Start hint: small touch-friendly guidance for mobile
+   ***************/
+  // none intrusive; user can explore
+
+  /***************
+   * Prevent accidental text selection when touching runaway button repeatedly
+   ***************/
+  document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, {passive:false});
+
+  </script>
+</body>
+</html>
